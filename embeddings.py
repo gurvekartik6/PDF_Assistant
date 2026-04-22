@@ -1,7 +1,3 @@
-# ============================================================
-# embeddings.py - Text Embedding Model (Stable Version)
-# ============================================================
-
 """
 This module provides a reusable embedding model for converting
 text into numerical vectors using HuggingFace.
@@ -17,13 +13,8 @@ Works with: langchain-community
 from typing import List
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
-# Global singleton model
+
 _embedding_model = None
-
-
-# ============================================================
-# LOAD EMBEDDING MODEL
-# ============================================================
 
 def get_embedding_model(model_name: str = "sentence-transformers/all-MiniLM-L6-v2") -> HuggingFaceEmbeddings:
     """
@@ -50,22 +41,12 @@ def get_embedding_model(model_name: str = "sentence-transformers/all-MiniLM-L6-v
 
     return _embedding_model
 
-
-# ============================================================
-# EMBED SINGLE TEXT
-# ============================================================
-
 def embed_text(text: str) -> List[float]:
     """
     Convert single text into embedding vector
     """
     model = get_embedding_model()
     return model.embed_query(text)
-
-
-# ============================================================
-# EMBED MULTIPLE TEXTS
-# ============================================================
 
 def embed_texts(texts: List[str]) -> List[List[float]]:
     """

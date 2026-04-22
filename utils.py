@@ -1,35 +1,9 @@
-# ============================================================
-# utils.py - Utility Helper Functions
-# ============================================================
-#
-# PURPOSE:
-#   This file contains small helper functions used throughout
-#   the application. Think of it as a "toolbox" of reusable
-#   functions that don't belong to any specific module.
-#
-# FUNCTIONS IN THIS FILE:
-#   - Session state management (Streamlit session)
-#   - Text formatting helpers
-#   - Source document formatting
-#   - Flashcard parsing and display helpers
-#   - File validation
-#   - Error handling utilities
-# ============================================================
-
 import os
 import re
 import time
 import hashlib
 from typing import List, Dict, Any, Optional
 from pathlib import Path
-
-
-# ============================================================
-# STREAMLIT SESSION STATE MANAGEMENT
-# ============================================================
-# Streamlit re-runs the entire Python script on every user
-# interaction. "Session state" is how we persist data between
-# these re-runs (like a dictionary that survives page reloads).
 
 def initialize_session_state(st) -> None:
     """
@@ -82,8 +56,7 @@ def initialize_session_state(st) -> None:
         "error_message": ""
     }
 
-    # Only set the default if the variable doesn't already exist
-    # (we don't want to overwrite existing values on rerun)
+
     for key, default_value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = default_value
@@ -111,9 +84,6 @@ def clear_session_data(st) -> None:
     initialize_session_state(st)
 
 
-# ============================================================
-# TEXT FORMATTING FUNCTIONS
-# ============================================================
 
 def format_source_documents(sources: List[Dict]) -> str:
     """
@@ -197,9 +167,9 @@ def truncate_text(text: str, max_length: int = 500, add_ellipsis: bool = True) -
 
     truncated = text[:max_length]
 
-    # Try to break at a word boundary (don't cut mid-word)
+
     last_space = truncated.rfind(' ')
-    if last_space > max_length * 0.8:  # Only if space is reasonably close to end
+    if last_space > max_length * 0.8:  
         truncated = truncated[:last_space]
 
     if add_ellipsis:
@@ -221,24 +191,22 @@ def clean_llm_response(text: str) -> str:
     Returns:
         Cleaned text
     """
-    # Remove common prefixes LLMs sometimes add
+    
     prefixes_to_remove = ["Answer:", "Response:", "AI:", "Assistant:"]
     for prefix in prefixes_to_remove:
         if text.startswith(prefix):
             text = text[len(prefix):].strip()
 
-    # Remove excessive blank lines (more than 2 consecutive)
+    
     text = re.sub(r'\n{3,}', '\n\n', text)
 
-    # Remove leading/trailing whitespace
+    
     text = text.strip()
 
     return text
 
 
-# ============================================================
-# FILE VALIDATION
-# ============================================================
+
 
 def validate_pdf_file(uploaded_file):
     """
@@ -250,19 +218,19 @@ def validate_pdf_file(uploaded_file):
     Returns:
         Tuple of (is_valid: bool, error_message: str)
     """
-    # Check file extension
+
     if not uploaded_file.name.lower().endswith('.pdf'):
         return False, f"'{uploaded_file.name}' is not a PDF file. Please upload PDF files only."
 
-    # Check file size (max 50MB)
+
     max_size_mb = 50
     max_size_bytes = max_size_mb * 1024 * 1024
     if uploaded_file.size > max_size_bytes:
         size_mb = uploaded_file.size / (1024 * 1024)
         return False, f"'{uploaded_file.name}' is {size_mb:.1f}MB. Maximum allowed size is {max_size_mb}MB."
 
-    # Check minimum file size (very small PDFs are likely corrupted)
-    if uploaded_file.size < 100:  # Less than 100 bytes is almost certainly invalid
+
+    if uploaded_file.size < 100: 
         return False, f"'{uploaded_file.name}' appears to be empty or corrupted."
 
     return True, ""
@@ -290,10 +258,6 @@ def validate_multiple_pdfs(uploaded_files) -> tuple:
 
     return valid_files, errors
 
-
-# ============================================================
-# STATISTICS AND DISPLAY HELPERS
-# ============================================================
 
 def format_file_size(size_bytes: int) -> str:
     """

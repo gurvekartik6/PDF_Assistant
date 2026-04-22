@@ -1,7 +1,3 @@
-# ============================================================
-# pdf_loader.py - PDF Loading and Text Chunking (FINAL)
-# ============================================================
-
 import os
 import tempfile
 from typing import List
@@ -11,9 +7,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
 
-# ============================================================
-# LOAD SINGLE PDF
-# ============================================================
+
 
 def load_single_pdf(file_path: str) -> List[Document]:
     """
@@ -28,9 +22,7 @@ def load_single_pdf(file_path: str) -> List[Document]:
     return documents
 
 
-# ============================================================
-# LOAD MULTIPLE UPLOADED PDFs
-# ============================================================
+
 
 def load_pdfs_from_uploads(uploaded_files) -> List[Document]:
     """
@@ -71,9 +63,6 @@ def load_pdfs_from_uploads(uploaded_files) -> List[Document]:
     return all_documents
 
 
-# ============================================================
-# SPLIT INTO CHUNKS
-# ============================================================
 
 def split_documents_into_chunks(
     documents: List[Document],

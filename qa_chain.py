@@ -1,7 +1,3 @@
-# ============================================================
-# qa_chain.py - FINAL (Smart Retrieval + Stable)
-# ============================================================
-
 import os
 import re
 import requests
@@ -16,9 +12,6 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 load_dotenv()
 
 
-# ============================================================
-# OPENROUTER LLM
-# ============================================================
 
 class OpenRouterLLM(LLM):
     api_key: str = os.getenv("OPENROUTER_API_KEY")
@@ -58,9 +51,6 @@ class OpenRouterLLM(LLM):
             return f"LLM Exception: {str(e)}"
 
 
-# ============================================================
-# PROMPT
-# ============================================================
 
 QA_PROMPT = PromptTemplate(
     template="""
@@ -78,9 +68,6 @@ Answer:
 )
 
 
-# ============================================================
-# INTENT DETECTION
-# ============================================================
 
 def extract_page_number(query: str):
     match = re.search(r'page\s*(\d+)', query.lower())
@@ -98,9 +85,6 @@ def detect_intent(query: str):
     return "semantic"
 
 
-# ============================================================
-# MAIN ASK FUNCTION
-# ============================================================
 
 def ask_question(chain, vector_store, question: str) -> Dict[str, Any]:
     intent = detect_intent(question)
@@ -163,9 +147,6 @@ Give a clear and structured explanation.
         }
 
 
-# ============================================================
-# CHAINS
-# ============================================================
 
 def create_conversational_chain(vector_store):
     llm = OpenRouterLLM(temperature=0.5)

@@ -1,8 +1,8 @@
 import os
-import streamlit as st
 import time
 import tempfile
 import warnings
+import streamlit as st
 import fitz
 
 from dotenv import load_dotenv
@@ -20,43 +20,36 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ---------------- CLEAN SAAS UI ----------------
+# ---------------- STABLE DARK UI ----------------
 st.markdown("""
 <style>
 
-/* BASE */
-html, body {
-    background: #f5f7fb;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: #111827;
-}
-
-/* MAIN */
-.block-container {
-    max-width: 1200px;
-    padding-top: 1.5rem;
+/* ROOT */
+html, body, [data-testid="stAppViewContainer"] {
+    background: #0f172a;
+    color: #e2e8f0;
 }
 
 /* SIDEBAR */
 section[data-testid="stSidebar"] {
-    background: #ffffff;
-    border-right: 1px solid #e5e7eb;
+    background: #020617;
+    border-right: 1px solid #1e293b;
 }
 
 /* HEADER */
 .header {
     font-size: 26px;
     font-weight: 600;
+    color: #e2e8f0;
     margin-bottom: 10px;
 }
 
 /* CARD */
 .card {
-    background: #ffffff;
+    background: #020617;
+    border: 1px solid #1e293b;
     border-radius: 14px;
     padding: 16px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 /* CHAT */
@@ -70,32 +63,28 @@ section[data-testid="stSidebar"] {
 }
 
 .chat-ai {
-    background: #f1f5f9;
-    color: #111827;
+    background: #020617;
+    border: 1px solid #1e293b;
+    color: #e2e8f0;
     padding: 10px 14px;
     border-radius: 12px;
     margin: 8px 0;
 }
 
-/* FIX FILE UPLOADER */
-[data-testid="stFileUploader"] * {
-    color: #111827 !important;
-}
-
 /* INPUT */
 input, textarea {
-    background: white !important;
-    color: #111827 !important;
+    background: #020617 !important;
+    color: #e2e8f0 !important;
+}
+
+/* FILE UPLOADER FIX */
+[data-testid="stFileUploader"] * {
+    color: #e2e8f0 !important;
 }
 
 /* BUTTON */
 button {
     border-radius: 8px !important;
-}
-
-/* SLIDER */
-[data-testid="stSlider"] {
-    padding-top: 10px;
 }
 
 </style>
@@ -114,6 +103,8 @@ if "current_file" not in st.session_state:
     st.session_state.current_file = None
 if "current_page" not in st.session_state:
     st.session_state.current_page = 1
+if "highlight_text" not in st.session_state:
+    st.session_state.highlight_text = ""
 
 # ---------------- HEADER ----------------
 st.markdown('<div class="header">AI PDF Assistant</div>', unsafe_allow_html=True)
@@ -128,18 +119,29 @@ with st.sidebar:
         accept_multiple_files=True
     )
 
-    if st.button("Process"):
+    if st.button("Process", key="process_btn"):
         if not files:
             st.warning("Upload PDFs first")
             st.stop()
 
         docs = load_pdfs_from_uploads(files)
+
+        if not docs:
+            st.error("No readable content found")
+            st.stop()
+
         chunks = split_documents_into_chunks(docs)
+
+        if not chunks:
+            st.error("No text extracted from PDF")
+            st.stop()
+
         vs = create_vector_store(chunks)
 
         st.session_state.vector_store = vs
         st.session_state.chain, _ = create_conversational_chain(vs)
 
+        # SAFE FILE STORAGE
         for f in files:
             file_bytes = f.getvalue()
             if file_bytes:
@@ -149,9 +151,15 @@ with st.sidebar:
 
         st.success("Documents ready")
 
-# stop if not ready
+# ---------------- EMPTY STATE ----------------
 if st.session_state.chain is None:
-    st.info("Upload and process PDFs to begin")
+    st.markdown("""
+    <div style="display:flex; height:70vh; align-items:center; justify-content:center; flex-direction:column; gap:10px;">
+        <div style="font-size:40px; opacity:0.6">📂</div>
+        <div style="font-size:16px; color:#e2e8f0">Upload and process PDFs to begin</div>
+        <div style="font-size:13px; color:#94a3b8">Use the sidebar</div>
+    </div>
+    """, unsafe_allow_html=True)
     st.stop()
 
 # ---------------- LAYOUT ----------------
@@ -168,41 +176,48 @@ with chat_col:
         else:
             st.markdown(f'<div class="chat-ai">{msg["text"]}</div>', unsafe_allow_html=True)
 
-    query = st.text_input("Ask your document")
+    query = st.text_input("Ask your document", key="query")
 
-    if st.button("Send"):
+    if st.button("Send", key="send_btn"):
         if query:
             st.session_state.history.append({"role": "User", "text": query})
 
-            result = ask_question(
-                st.session_state.chain,
-                st.session_state.vector_store,
-                query
-            )
+            try:
+                result = ask_question(
+                    st.session_state.chain,
+                    st.session_state.vector_store,
+                    query
+                )
 
-            answer = result["answer"]
-            docs = result["sources"]
+                answer = result.get("answer", "")
+                docs = result.get("sources", [])
 
-            # STREAM
-            display = st.empty()
+            except Exception:
+                st.error("Error generating response")
+                st.stop()
+
+            # STREAMING EFFECT
+            placeholder = st.empty()
             text = ""
 
             for word in answer.split():
                 text += word + " "
-                display.markdown(f'<div class="chat-ai">{text}</div>', unsafe_allow_html=True)
+                placeholder.markdown(f'<div class="chat-ai">{text}</div>', unsafe_allow_html=True)
                 time.sleep(0.01)
 
             st.session_state.history.append({"role": "AI", "text": text})
 
-            # SOURCE NAV
-            st.markdown("### Sources")
-            for i, d in enumerate(docs):
-                fname = d.metadata.get("source")
-                page = d.metadata.get("page", 0)
+            # SOURCE NAVIGATION
+            if docs:
+                st.markdown("### Sources")
+                for i, d in enumerate(docs):
+                    fname = d.metadata.get("source")
+                    page = d.metadata.get("page", 0)
 
-                if st.button(f"{fname} | Page {page+1}", key=f"src_{i}"):
-                    st.session_state.current_file = fname
-                    st.session_state.current_page = page + 1
+                    if st.button(f"{fname} | Page {page+1}", key=f"src_{i}"):
+                        st.session_state.current_file = fname
+                        st.session_state.current_page = page + 1
+                        st.session_state.highlight_text = d.page_content[:120]
 
             st.rerun()
 
@@ -217,7 +232,11 @@ with viewer_col:
 
     selected = st.selectbox("File", file_names)
 
-    pdf_bytes = st.session_state.pdf_files[selected]
+    pdf_bytes = st.session_state.pdf_files.get(selected)
+
+    if not pdf_bytes:
+        st.error("Invalid PDF")
+        st.stop()
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
         tmp.write(pdf_bytes)
@@ -228,11 +247,10 @@ with viewer_col:
 
     # NAVIGATION
     c1, c2, c3, c4 = st.columns(4)
-
-    if c1.button("⏮"): st.session_state.current_page = 1
-    if c2.button("◀"): st.session_state.current_page -= 1
-    if c3.button("▶"): st.session_state.current_page += 1
-    if c4.button("⏭"): st.session_state.current_page = total_pages
+    if c1.button("⏮", key="first"): st.session_state.current_page = 1
+    if c2.button("◀", key="prev"): st.session_state.current_page -= 1
+    if c3.button("▶", key="next"): st.session_state.current_page += 1
+    if c4.button("⏭", key="last"): st.session_state.current_page = total_pages
 
     st.session_state.current_page = max(1, min(total_pages, st.session_state.current_page))
 
@@ -243,11 +261,20 @@ with viewer_col:
 
     page = doc.load_page(page_num - 1)
 
-    pix = page.get_pixmap(matrix=fitz.Matrix(zoom/100, zoom/100))
-    img = tmp_path + ".png"
-    pix.save(img)
+    # highlight
+    if st.session_state.highlight_text:
+        try:
+            areas = page.search_for(st.session_state.highlight_text[:60])
+            for a in areas:
+                page.add_highlight_annot(a)
+        except:
+            pass
 
-    st.image(img, use_column_width=True)
+    pix = page.get_pixmap(matrix=fitz.Matrix(zoom/100, zoom/100))
+    img_path = tmp_path + ".png"
+    pix.save(img_path)
+
+    st.image(img_path, use_column_width=True)
     st.caption(f"Page {page_num} / {total_pages}")
 
     st.markdown('</div>', unsafe_allow_html=True)
