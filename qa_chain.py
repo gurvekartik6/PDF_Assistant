@@ -78,7 +78,7 @@ def extract_page_number(query: str):
 
 def detect_intent(query: str):
     query = query.lower()
-    if "page" in query:
+    if re.search(r'page\s*\d+', query):   # only "page" intent when a number follows
         return "page"
     elif "summary" in query or "summarize" in query:
         return "summary"
@@ -93,7 +93,9 @@ def ask_question(chain, vector_store, question: str) -> Dict[str, Any]:
     if intent == "page":
         page = extract_page_number(question)
 
-        # 🔥 FIX: get ALL chunks directly (no similarity search)
+        if page is None:                          # safety guard — should never hit now
+            return {"answer": "Could not determine page number.", "sources": []}
+
         all_docs = vector_store.docstore._dict.values()
 
         page_docs = [
@@ -101,7 +103,7 @@ def ask_question(chain, vector_store, question: str) -> Dict[str, Any]:
         ]
 
         if not page_docs:
-            return {"answer": f"Page {page+1} not found", "sources": []}
+            return {"answer": f"Page {page + 1} not found in the document.", "sources": []}
 
         context = "\n\n".join([d.page_content for d in page_docs])
 
@@ -110,7 +112,7 @@ def ask_question(chain, vector_store, question: str) -> Dict[str, Any]:
         prompt = f"""
 You are explaining content from a PDF.
 
-Context (Page {page+1}):
+Context (Page {page + 1}):
 {context}
 
 Question:
