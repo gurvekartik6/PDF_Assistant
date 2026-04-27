@@ -1,7 +1,3 @@
-"""
-utils.py - Utility functions for the Docent app.
-"""
-
 import os
 import re
 import time
@@ -34,7 +30,6 @@ def initialize_session_state(st) -> None:
 
 
 def clear_session_data(st) -> None:
-    """Clear all session data and reinitialize."""
     keys = [
         "vector_store", "chat_history", "chain",
         "pdf_files", "loaded_pdfs", "pdfs_processed",
@@ -48,7 +43,6 @@ def clear_session_data(st) -> None:
 
 
 def format_source_documents(sources) -> str:
-    """Format source document references for display."""
     if not sources:
         return ""
     formatted = "\n\n---\n📚 **Sources:**\n"
@@ -67,7 +61,6 @@ def format_source_documents(sources) -> str:
 
 
 def validate_pdf_file(uploaded_file) -> tuple:
-    """Validate uploaded PDF file. Returns (is_valid, error_message)."""
     if not uploaded_file.name.lower().endswith(".pdf"):
         return False, f"'{uploaded_file.name}' is not a PDF file."
     max_bytes = 50 * 1024 * 1024
@@ -80,7 +73,6 @@ def validate_pdf_file(uploaded_file) -> tuple:
 
 
 def format_file_size(size_bytes: int) -> str:
-    """Convert bytes to human-readable size string."""
     if size_bytes < 1024:
         return f"{size_bytes} B"
     elif size_bytes < 1024 * 1024:
@@ -90,12 +82,10 @@ def format_file_size(size_bytes: int) -> str:
 
 
 def get_file_hash(file_content: bytes) -> str:
-    """Generate MD5 hash for a file."""
     return hashlib.md5(file_content).hexdigest()
 
 
 def clean_llm_response(text: str) -> str:
-    """Strip common LLM preamble artifacts."""
     for prefix in ["Answer:", "Response:", "AI:", "Assistant:"]:
         if text.startswith(prefix):
             text = text[len(prefix):].strip()
@@ -104,7 +94,6 @@ def clean_llm_response(text: str) -> str:
 
 
 def truncate_text(text: str, max_length: int = 500) -> str:
-    """Truncate text to max_length, breaking at word boundary."""
     if len(text) <= max_length:
         return text
     truncated = text[:max_length]
@@ -115,7 +104,6 @@ def truncate_text(text: str, max_length: int = 500) -> str:
 
 
 def format_chat_history_for_export(chat_history: List[Dict]) -> str:
-    """Format chat history as plain text."""
     if not chat_history:
         return "No chat history available."
     lines = ["=" * 60, "DOCENT - CHAT HISTORY", "=" * 60, ""]

@@ -1,7 +1,3 @@
-"""
-vector_store.py - FAISS Vector Database Management
-"""
-
 import os
 import shutil
 from pathlib import Path
@@ -14,7 +10,7 @@ from embeddings import get_embedding_model
 
 
 def create_vector_store(chunks: List[Document]) -> FAISS:
-    """Create FAISS vector store from document chunks."""
+ 
     if not chunks:
         raise ValueError("No chunks provided for vector store")
 
@@ -26,14 +22,14 @@ def create_vector_store(chunks: List[Document]) -> FAISS:
 
 
 def save_vector_store(vector_store: FAISS, path: str = "./vector_store") -> None:
-    """Save vector store to disk."""
+ 
     Path(path).mkdir(parents=True, exist_ok=True)
     vector_store.save_local(path)
     print(f"Vector store saved at {path}")
 
 
 def load_vector_store(path: str = "./vector_store") -> Optional[FAISS]:
-    """Load vector store from disk."""
+ 
     index_file = Path(path) / "index.faiss"
     meta_file = Path(path) / "index.pkl"
 
@@ -53,7 +49,7 @@ def load_vector_store(path: str = "./vector_store") -> Optional[FAISS]:
 
 
 def vector_store_exists(path: str = "./vector_store") -> bool:
-    """Check if vector store exists."""
+    
     return (
         (Path(path) / "index.faiss").exists()
         and (Path(path) / "index.pkl").exists()
@@ -61,12 +57,11 @@ def vector_store_exists(path: str = "./vector_store") -> bool:
 
 
 def delete_vector_store(path: str = "./vector_store") -> None:
-    """Delete stored vector database."""
+    
     if Path(path).exists():
         shutil.rmtree(path)
         print("Vector store deleted")
 
 
 def search_similar_chunks(vector_store: FAISS, query: str, k: int = 6):
-    """Retrieve similar chunks from vector store."""
     return vector_store.similarity_search(query, k=k)
