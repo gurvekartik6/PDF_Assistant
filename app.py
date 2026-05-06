@@ -20,20 +20,21 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* ═══════════════ LIGHT 3D GLASSMORPHISM BASE ═══════════════ */
 html, body {
-    background: linear-gradient(135deg, #0f0c29 0%, #1a1a4e 35%, #24243e 65%, #0f3460 100%) !important;
+    background: linear-gradient(135deg, #e8eaf6 0%, #ede7f6 30%, #e3f2fd 65%, #f3e5f5 100%) !important;
     min-height: 100vh !important;
     font-family: 'Inter', sans-serif !important;
 }
 [data-testid="stApp"],
 [data-testid="stAppViewContainer"] {
-    background: linear-gradient(135deg, #0f0c29 0%, #1a1a4e 35%, #24243e 65%, #0f3460 100%) !important;
+    background: linear-gradient(135deg, #e8eaf6 0%, #ede7f6 30%, #e3f2fd 65%, #f3e5f5 100%) !important;
 }
 [data-testid="stAppViewBlockContainer"],
 .main, .block-container {
     background: transparent !important;
     font-family: 'Inter', sans-serif !important;
-    color: #e0e7ff !important;
+    color: #1e1b4b !important;
 }
 .main .block-container { padding: 1.2rem 1.5rem !important; max-width: 100% !important; }
 #MainMenu, footer, header,
@@ -41,185 +42,321 @@ html, body {
 [data-testid="stDecoration"],
 [data-testid="stStatusWidget"] { display:none !important; }
 
+/* ═══════════════ SIDEBAR ═══════════════ */
 [data-testid="stSidebar"],
 [data-testid="stSidebar"] > div {
-    background: rgba(15,12,41,0.78) !important;
-    backdrop-filter: blur(32px) saturate(160%) !important;
-    border-right: 1px solid rgba(255,255,255,0.10) !important;
-    overflow-y: auto !important;
-    scrollbar-width: thin !important;
-    scrollbar-color: rgba(99,102,241,0.55) rgba(255,255,255,0.04) !important;
+    background: rgba(255,255,255,0.65) !important;
+    backdrop-filter: blur(32px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+    border-right: 1px solid rgba(99,102,241,0.15) !important;
+    box-shadow: 4px 0 24px rgba(99,102,241,0.08) !important;
 }
-[data-testid="stSidebar"] * { color: #e0e7ff !important; }
+[data-testid="stSidebar"] * { color: #1e1b4b !important; }
 
+/* ═══════════════ TEXT INPUT ═══════════════ */
 [data-testid="stTextInput"] > label { display: none !important; }
 [data-testid="stTextInput"] input,
 div[data-baseweb="input"] > div {
-    background: rgba(255,255,255,0.07) !important;
-    color: #e0e7ff !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
-    border-radius: 12px !important;
+    background: rgba(255,255,255,0.80) !important;
+    color: #1e1b4b !important;
+    border: 1.5px solid rgba(99,102,241,0.25) !important;
+    border-radius: 14px !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 14px !important;
-    padding: 10px 14px !important;
-    -webkit-text-fill-color: #e0e7ff !important;
-    caret-color: #818cf8 !important;
+    padding: 11px 16px !important;
+    box-shadow: 0 2px 12px rgba(99,102,241,0.08), 0 1px 0 rgba(255,255,255,0.9) inset !important;
+    transition: border-color .2s, box-shadow .2s !important;
 }
-[data-testid="stTextInput"] input::placeholder { color: rgba(160,170,210,0.45) !important; }
+[data-testid="stTextInput"] input:focus { border-color: rgba(99,102,241,0.55) !important; box-shadow: 0 0 0 3px rgba(99,102,241,0.12), 0 2px 12px rgba(99,102,241,0.08) inset !important; }
+[data-testid="stTextInput"] input::placeholder { color: rgba(100,100,150,0.5) !important; }
 
+/* ═══════════════ BUTTONS ═══════════════ */
 .stButton > button {
     font-family: 'Inter', sans-serif !important;
-    background: rgba(255,255,255,0.07) !important;
-    color: #c7d2fe !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
+    background: rgba(255,255,255,0.70) !important;
+    color: #4338ca !important;
+    border: 1.5px solid rgba(99,102,241,0.25) !important;
     border-radius: 10px !important;
     font-size: 13px !important; font-weight: 500 !important;
     padding: 8px 14px !important;
     backdrop-filter: blur(10px) !important;
     transition: all .18s !important;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.12), 0 1px 0 rgba(255,255,255,0.9) inset !important;
     width: 100% !important;
 }
 .stButton > button:hover {
-    background: rgba(99,102,241,0.22) !important;
-    border-color: rgba(129,140,248,0.5) !important;
-    color: #e0e7ff !important;
+    background: rgba(99,102,241,0.12) !important;
+    border-color: rgba(99,102,241,0.45) !important;
+    color: #3730a3 !important;
     transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(99,102,241,0.20), 0 1px 0 rgba(255,255,255,0.9) inset !important;
 }
 
-[data-testid="stSelectbox"] > div > div {
-    background: rgba(255,255,255,0.07) !important;
-    border: 1px solid rgba(255,255,255,0.14) !important;
+/* ═══════════════ SELECTBOX ═══════════════ */
+[data-testid="stSelectbox"] > div > div,
+[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    background: rgba(255,255,255,0.75) !important;
+    border: 1.5px solid rgba(99,102,241,0.2) !important;
     border-radius: 10px !important;
-    color: #e0e7ff !important;
+    color: #1e1b4b !important;
 }
 [data-testid="stSelectbox"] label { display: none !important; }
 
+/* ═══════════════ FILE UPLOADER ═══════════════ */
 [data-testid="stFileUploader"],
 [data-testid="stFileUploaderDropzone"] {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1.5px dashed rgba(129,140,248,0.35) !important;
-    border-radius: 12px !important;
-    color: #a5b4fc !important;
+    background: rgba(255,255,255,0.55) !important;
+    border: 2px dashed rgba(99,102,241,0.30) !important;
+    border-radius: 14px !important;
+    color: #4338ca !important;
 }
+
+/* ═══════════════ ALERTS ═══════════════ */
 [data-testid="stAlert"] {
-    background: rgba(255,255,255,0.07) !important;
-    border: 1px solid rgba(255,255,255,0.11) !important;
+    background: rgba(255,255,255,0.75) !important;
+    border: 1px solid rgba(99,102,241,0.18) !important;
     border-radius: 10px !important;
-    color: #e0e7ff !important;
+    color: #1e1b4b !important;
     font-size: 13px !important;
+    box-shadow: 0 2px 12px rgba(99,102,241,0.08) !important;
 }
+
+/* ═══════════════ EXPANDER ═══════════════ */
 [data-testid="stExpander"] {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.09) !important;
+    background: rgba(255,255,255,0.65) !important;
+    border: 1px solid rgba(99,102,241,0.15) !important;
     border-radius: 12px !important;
+    box-shadow: 0 2px 10px rgba(99,102,241,0.07) !important;
 }
-[data-testid="stExpander"] summary { color: #c7d2fe !important; }
+[data-testid="stExpander"] summary { color: #4338ca !important; font-weight:500 !important; }
+
+/* ═══════════════ DOWNLOAD BUTTON ═══════════════ */
 [data-testid="stDownloadButton"] > button {
-    background: rgba(255,255,255,0.06) !important;
-    border: 1px solid rgba(255,255,255,0.13) !important;
-    color: #a5b4fc !important; font-size: 12px !important;
+    background: rgba(255,255,255,0.70) !important;
+    border: 1.5px solid rgba(99,102,241,0.2) !important;
+    color: #4338ca !important; font-size: 12px !important;
     border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.10) !important;
 }
 
-/* ── Brand ── */
-.sb-brand { padding:20px 16px 16px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:12px; }
-.sb-logo { width:38px; height:38px; background:linear-gradient(135deg,#6366f1,#a855f7); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-.sb-name { font-size:15px; font-weight:700; color:#e0e7ff; }
-.sb-tag  { font-size:10px; color:rgba(160,170,210,0.55); margin-top:1px; letter-spacing:.7px; }
+/* ═══════════════ SIDEBAR BRAND ═══════════════ */
+.sb-brand { padding:20px 16px 16px; border-bottom:1px solid rgba(99,102,241,0.12); display:flex; align-items:center; gap:12px; }
+.sb-logo { width:40px; height:40px; background:linear-gradient(135deg,#6366f1,#a855f7); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; box-shadow:0 4px 15px rgba(99,102,241,0.35); }
+.sb-name { font-size:15px; font-weight:700; color:#1e1b4b !important; }
+.sb-tag  { font-size:10px; color:rgba(67,56,202,0.6) !important; margin-top:1px; letter-spacing:.7px; }
 .sb-inner { padding:8px 14px 24px; }
-.sb-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(160,170,210,0.5); margin:18px 0 6px 2px; display:block; }
+.sb-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(67,56,202,0.55) !important; margin:18px 0 6px 2px; display:block; }
 
+/* ═══════════════ PROCESS BUTTON ═══════════════ */
 .proc-btn > button {
     background: linear-gradient(135deg,#6366f1,#a855f7) !important;
-    color:#fff !important; border:none !important; border-radius:11px !important;
+    color:#fff !important; border:none !important; border-radius:12px !important;
     font-weight:600 !important; font-size:13px !important; padding:11px 0 !important;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.40), 0 1px 0 rgba(255,255,255,0.2) inset !important;
 }
-.file-badge { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:9px; padding:7px 10px; margin:3px 0; font-size:12px; color:#c7d2fe; }
-.file-dot   { width:7px; height:7px; background:#34d399; border-radius:50%; flex-shrink:0; box-shadow:0 0 6px rgba(52,211,153,0.6); }
-.file-name  { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.file-size  { font-size:10px; color:rgba(160,170,210,0.45); }
+.proc-btn > button:hover { opacity:.90 !important; transform:translateY(-1px) !important; }
 
+/* ═══════════════ FILE BADGE ═══════════════ */
+.file-badge { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.70); border:1px solid rgba(99,102,241,0.15); border-radius:10px; padding:8px 12px; margin:4px 0; font-size:12px; color:#4338ca; box-shadow:0 2px 8px rgba(99,102,241,0.07); }
+.file-dot   { width:7px; height:7px; background:#10b981; border-radius:50%; flex-shrink:0; box-shadow:0 0 6px rgba(16,185,129,0.5); }
+.file-name  { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#1e1b4b; }
+.file-size  { font-size:10px; color:rgba(67,56,202,0.5); }
+
+/* ═══════════════ TAB BAR ═══════════════ */
 .tab-active > button {
-    background: linear-gradient(135deg,rgba(99,102,241,0.45),rgba(168,85,247,0.35)) !important;
-    color:#e0e7ff !important; border-color:rgba(129,140,248,0.35) !important;
-    font-weight:600 !important;
+    background: linear-gradient(135deg,rgba(99,102,241,0.18),rgba(168,85,247,0.12)) !important;
+    color:#3730a3 !important; border-color:rgba(99,102,241,0.40) !important;
+    font-weight:700 !important;
+    box-shadow: 0 2px 12px rgba(99,102,241,0.20), 0 1px 0 rgba(255,255,255,0.9) inset !important;
 }
 
-/* ── Chat panel ── */
+/* ═══════════════ CHAT PANEL ═══════════════ */
 .chat-panel {
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(24px) saturate(180%);
-    border:1px solid rgba(255,255,255,0.12); border-radius:18px; overflow:hidden;
-    box-shadow:0 8px 40px rgba(0,0,0,0.4);
+    background: rgba(255,255,255,0.60);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1.5px solid rgba(99,102,241,0.18);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(99,102,241,0.12), 0 2px 0 rgba(255,255,255,0.9) inset;
 }
-.panel-hdr { padding:13px 18px; border-bottom:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:space-between; }
-.panel-hdr-title { font-size:13px; font-weight:600; color:#c7d2fe; }
-.panel-badge { font-size:11px; background:rgba(99,102,241,0.2); border:1px solid rgba(129,140,248,0.3); color:#a5b4fc; border-radius:20px; padding:2px 10px; }
+.panel-hdr {
+    padding:14px 20px;
+    border-bottom:1px solid rgba(99,102,241,0.10);
+    background: rgba(255,255,255,0.50);
+    display:flex; align-items:center; justify-content:space-between;
+}
+.panel-hdr-title { font-size:14px; font-weight:700; color:#1e1b4b; }
+.panel-badge { font-size:11px; background:rgba(99,102,241,0.10); border:1px solid rgba(99,102,241,0.25); color:#4338ca; border-radius:20px; padding:3px 12px; font-weight:500; }
 
-.chat-body { min-height:380px; max-height:420px; overflow-y:auto; padding:18px 16px 10px; scrollbar-width:thin; scrollbar-color:rgba(99,102,241,0.4) rgba(255,255,255,0.04); }
+/* ═══════════════ CHAT BODY ═══════════════ */
+.chat-body {
+    min-height:400px; max-height:440px; overflow-y:auto;
+    padding:20px 18px 12px;
+    scrollbar-width:thin; scrollbar-color:rgba(99,102,241,0.25) transparent;
+}
 .chat-body::-webkit-scrollbar { width:4px; }
-.chat-body::-webkit-scrollbar-thumb { background:rgba(99,102,241,0.4); border-radius:4px; }
+.chat-body::-webkit-scrollbar-thumb { background:rgba(99,102,241,0.25); border-radius:4px; }
 
-.chat-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:300px; gap:10px; }
-.chat-empty-icon  { font-size:44px; opacity:.3; }
-.chat-empty-title { font-size:15px; font-weight:600; color:rgba(160,174,214,0.65); }
-.chat-empty-sub   { font-size:12px; color:rgba(160,174,214,0.4); }
+.chat-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:340px; gap:12px; }
+.chat-empty-icon  { font-size:48px; opacity:.25; }
+.chat-empty-title { font-size:16px; font-weight:600; color:rgba(67,56,202,0.60); }
+.chat-empty-sub   { font-size:13px; color:rgba(67,56,202,0.40); }
 
-.msg-user { display:flex; justify-content:flex-end; margin:8px 0; }
-.bubble-user { background:linear-gradient(135deg,#6366f1,#7c3aed); color:#fff; border-radius:18px 18px 4px 18px; padding:11px 16px; font-size:14px; line-height:1.6; max-width:78%; word-wrap:break-word; box-shadow:0 4px 16px rgba(99,102,241,0.35); }
+/* ═══════════════ CHAT MESSAGES ═══════════════ */
+.msg-row-user { display:flex; justify-content:flex-end; margin:10px 0; animation: fadeSlideUp 0.25s ease; }
+.msg-row-ai   { display:flex; align-items:flex-end; gap:10px; margin:10px 0; animation: fadeSlideUp 0.25s ease; }
 
-.msg-ai { display:flex; align-items:flex-start; gap:10px; margin:8px 0; }
-.ai-av  { width:30px; height:30px; flex-shrink:0; background:linear-gradient(135deg,#6366f1,#a855f7); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; margin-top:2px; }
-.bubble-ai { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.13); border-radius:4px 18px 18px 18px; padding:11px 16px; font-size:14px; line-height:1.8; color:#e0e7ff; max-width:85%; word-wrap:break-word; white-space:pre-wrap; }
+@keyframes fadeSlideUp {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+}
 
-/* ── Input row ── */
-.send-btn > button { background:linear-gradient(135deg,#6366f1,#7c3aed) !important; border:none !important; color:#fff !important; font-weight:600 !important; border-radius:10px !important; font-size:13px !important; width:auto !important; }
-.icon-btn > button { background:rgba(255,255,255,0.08) !important; border:1px solid rgba(255,255,255,0.13) !important; color:#a5b4fc !important; border-radius:10px !important; padding:8px !important; font-size:14px !important; width:38px !important; }
+.bubble-user {
+    background: linear-gradient(135deg,#6366f1,#7c3aed);
+    color:#fff;
+    border-radius:20px 20px 6px 20px;
+    padding:12px 18px;
+    font-size:14px; line-height:1.65;
+    max-width:72%;
+    word-wrap:break-word;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.30), 0 1px 0 rgba(255,255,255,0.2) inset;
+}
 
-/* ── Content panels ── */
-.cp { background:rgba(255,255,255,0.05); backdrop-filter:blur(24px) saturate(180%); border:1px solid rgba(255,255,255,0.12); border-radius:18px; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,0.4); }
-.cp-hdr { padding:13px 18px; border-bottom:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.04); }
-.cp-hdr-title { font-size:13px; font-weight:600; color:#c7d2fe; }
-.cp-body { padding:20px 22px; }
-.cp-desc { font-size:13px; color:rgba(160,174,214,0.65); margin-bottom:16px; line-height:1.6; }
-.ct { font-size:14px; line-height:1.9; color:#e0e7ff; white-space:pre-wrap; word-wrap:break-word; }
-/* Markdown inside .ct */
-.ct h1,.ct h2,.ct h3 { color:#a5b4fc; margin:12px 0 6px; }
-.ct ul,.ct ol { padding-left:20px; margin:6px 0; }
-.ct li { margin:3px 0; }
-.ct strong { color:#c7d2fe; }
+.ai-avatar {
+    width:32px; height:32px; flex-shrink:0;
+    background: linear-gradient(135deg,#6366f1,#a855f7);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:#fff;
+    box-shadow: 0 3px 12px rgba(99,102,241,0.35);
+    margin-bottom:2px;
+}
 
-.gen-btn > button { background:linear-gradient(135deg,#6366f1,#a855f7) !important; color:#fff !important; border:none !important; border-radius:11px !important; font-size:13px !important; font-weight:600 !important; padding:10px 28px !important; width:auto !important; }
+.bubble-ai {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(99,102,241,0.15);
+    border-radius:6px 20px 20px 20px;
+    padding:12px 18px;
+    font-size:14px; line-height:1.80;
+    color:#1e1b4b;
+    max-width:78%;
+    word-wrap:break-word;
+    white-space:pre-wrap;
+    box-shadow: 0 4px 16px rgba(99,102,241,0.10), 0 1px 0 rgba(255,255,255,0.9) inset;
+}
 
-/* ── Voice bar ── */
-.voice-bar { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:10px 14px; margin-top:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.voice-label { font-size:10px; font-weight:700; color:rgba(160,174,214,0.55); text-transform:uppercase; letter-spacing:.8px; }
+.bubble-typing {
+    background: rgba(255,255,255,0.85);
+    border: 1.5px solid rgba(99,102,241,0.15);
+    border-radius:6px 20px 20px 20px;
+    padding:12px 18px;
+    font-size:14px; line-height:1.80;
+    color:#1e1b4b;
+    max-width:78%;
+    word-wrap:break-word;
+    white-space:pre-wrap;
+    box-shadow: 0 4px 16px rgba(99,102,241,0.10);
+}
 
-/* ── PDF Viewer ── */
-.vw { background:rgba(255,255,255,0.05); backdrop-filter:blur(24px) saturate(180%); border:1px solid rgba(255,255,255,0.12); border-radius:18px; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,0.4); }
-.vw-hdr { padding:13px 18px; border-bottom:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:space-between; }
-.vw-title { font-size:13px; font-weight:600; color:#c7d2fe; }
-.vw-badge { font-size:11px; background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.25); color:#fbbf24; border-radius:20px; padding:2px 10px; }
-.vw-body { padding:12px 14px; }
+.msg-time { font-size:10px; color:rgba(67,56,202,0.35); margin-top:3px; text-align:right; }
+.msg-time-ai { font-size:10px; color:rgba(67,56,202,0.35); margin-top:3px; padding-left:42px; }
 
-/* ── Welcome ── */
-.wc-outer { display:flex; align-items:center; justify-content:center; min-height:75vh; }
-.wc { background:rgba(255,255,255,0.07); backdrop-filter:blur(40px) saturate(200%); border:1px solid rgba(255,255,255,0.15); border-radius:24px; padding:48px 56px; text-align:center; max-width:500px; width:100%; }
-.wc-logo { width:62px; height:62px; background:linear-gradient(135deg,#6366f1,#a855f7); border-radius:16px; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; font-size:28px; }
-.wc-title { font-size:24px; font-weight:700; color:#e0e7ff; margin-bottom:12px; }
-.wc-desc  { font-size:14px; color:rgba(160,174,214,0.7); line-height:1.75; margin-bottom:24px; }
+/* ═══════════════ INPUT ROW ═══════════════ */
+.input-area {
+    background: rgba(255,255,255,0.70);
+    border-top: 1px solid rgba(99,102,241,0.10);
+    padding: 12px 16px;
+    display:flex; align-items:center; gap:8px;
+}
+.send-btn > button {
+    background:linear-gradient(135deg,#6366f1,#7c3aed) !important;
+    border:none !important; color:#fff !important;
+    font-weight:600 !important; border-radius:12px !important;
+    font-size:13px !important; width:auto !important;
+    box-shadow: 0 4px 15px rgba(99,102,241,0.35) !important;
+    padding: 9px 20px !important;
+}
+.send-btn > button:hover { opacity:.88 !important; transform:translateY(-1px) !important; }
+.icon-btn > button {
+    background:rgba(255,255,255,0.80) !important;
+    border:1.5px solid rgba(99,102,241,0.20) !important;
+    color:#4338ca !important; border-radius:10px !important;
+    font-size:15px !important; width:38px !important;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.10) !important;
+    padding: 6px !important;
+}
+.icon-btn > button:hover { background:rgba(99,102,241,0.10) !important; }
+
+/* ═══════════════ CONTENT PANELS ═══════════════ */
+.cp {
+    background: rgba(255,255,255,0.60);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1.5px solid rgba(99,102,241,0.18);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(99,102,241,0.12), 0 2px 0 rgba(255,255,255,0.9) inset;
+}
+.cp-hdr { padding:14px 20px; border-bottom:1px solid rgba(99,102,241,0.10); background:rgba(255,255,255,0.50); }
+.cp-hdr-title { font-size:14px; font-weight:700; color:#1e1b4b; }
+.cp-body { padding:22px 24px; }
+.cp-desc { font-size:13px; color:rgba(67,56,202,0.65); margin-bottom:18px; line-height:1.65; }
+.ct { font-size:14px; line-height:1.9; color:#1e1b4b; white-space:pre-wrap; word-wrap:break-word; }
+.ct h1,.ct h2,.ct h3 { color:#4338ca; margin:14px 0 6px; font-weight:700; }
+.ct ul,.ct ol { padding-left:22px; margin:6px 0; }
+.ct li { margin:4px 0; }
+.ct strong { color:#3730a3; }
+
+.gen-btn > button {
+    background:linear-gradient(135deg,#6366f1,#a855f7) !important;
+    color:#fff !important; border:none !important; border-radius:12px !important;
+    font-size:13px !important; font-weight:600 !important; padding:11px 28px !important;
+    width:auto !important;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.35) !important;
+}
+.gen-btn > button:hover { opacity:.88 !important; transform:translateY(-1px) !important; }
+
+/* ═══════════════ VOICE BAR ═══════════════ */
+.voice-bar { background:rgba(255,255,255,0.55); border:1px solid rgba(99,102,241,0.14); border-radius:12px; padding:10px 14px; margin-top:14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; box-shadow:0 2px 8px rgba(99,102,241,0.07); }
+.voice-label { font-size:10px; font-weight:700; color:rgba(67,56,202,0.55); text-transform:uppercase; letter-spacing:.8px; }
+
+/* ═══════════════ PDF VIEWER ═══════════════ */
+.vw { background:rgba(255,255,255,0.60); backdrop-filter:blur(28px) saturate(180%); border:1.5px solid rgba(99,102,241,0.18); border-radius:20px; overflow:hidden; box-shadow:0 8px 40px rgba(99,102,241,0.12), 0 2px 0 rgba(255,255,255,0.9) inset; }
+.vw-hdr { padding:14px 20px; border-bottom:1px solid rgba(99,102,241,0.10); background:rgba(255,255,255,0.50); display:flex; align-items:center; justify-content:space-between; }
+.vw-title { font-size:14px; font-weight:700; color:#1e1b4b; }
+.vw-badge { font-size:11px; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.30); color:#d97706; border-radius:20px; padding:3px 12px; font-weight:500; }
+.vw-body { padding:14px; }
+
+/* ═══════════════ WELCOME ═══════════════ */
+.wc-outer { display:flex; align-items:center; justify-content:center; min-height:78vh; }
+.wc {
+    background: rgba(255,255,255,0.70);
+    backdrop-filter: blur(40px) saturate(200%);
+    border: 1.5px solid rgba(99,102,241,0.18);
+    border-radius: 28px; padding:52px 60px;
+    text-align:center; max-width:520px; width:100%;
+    box-shadow: 0 24px 80px rgba(99,102,241,0.15), 0 2px 0 rgba(255,255,255,0.95) inset;
+}
+.wc-logo { width:68px; height:68px; background:linear-gradient(135deg,#6366f1,#a855f7); border-radius:18px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 8px 32px rgba(99,102,241,0.40); }
+.wc-title { font-size:26px; font-weight:800; color:#1e1b4b; margin-bottom:14px; }
+.wc-desc  { font-size:14px; color:rgba(67,56,202,0.70); line-height:1.80; margin-bottom:26px; }
 .wc-steps { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-.step-chip { background:rgba(99,102,241,0.18); border:1px solid rgba(129,140,248,0.3); border-radius:20px; padding:6px 16px; font-size:12px; color:#a5b4fc; font-weight:500; }
+.step-chip { background:rgba(99,102,241,0.10); border:1.5px solid rgba(99,102,241,0.22); border-radius:20px; padding:7px 18px; font-size:12px; color:#4338ca; font-weight:600; }
 
-/* ── Flashcard ── */
-.fc-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.10); border-radius:14px; padding:16px 20px; margin-bottom:10px; }
-.fc-q { font-size:13px; font-weight:600; color:#a5b4fc; margin-bottom:8px; }
-.fc-a { font-size:14px; color:#e0e7ff; line-height:1.65; }
-.fc-divider { border:none; border-top:1px solid rgba(255,255,255,0.08); margin:10px 0; }
+/* ═══════════════ FLASHCARD ═══════════════ */
+.fc-card { background:rgba(255,255,255,0.80); border:1.5px solid rgba(99,102,241,0.15); border-radius:16px; padding:18px 22px; margin-bottom:10px; box-shadow:0 3px 14px rgba(99,102,241,0.08); }
+.fc-q { font-size:12px; font-weight:700; color:#6366f1; margin-bottom:8px; text-transform:uppercase; letter-spacing:.6px; }
+.fc-a { font-size:14px; color:#1e1b4b; line-height:1.70; }
+.fc-divider { border:none; border-top:1px solid rgba(99,102,241,0.12); margin:12px 0; }
 </style>
 """, unsafe_allow_html=True)
 
 initialize_session_state(st)
+
+import datetime
+def _now():
+    return datetime.datetime.now().strftime("%I:%M %p")
 
 
 def _voice_bar(content_text: str, section_key: str):
@@ -227,7 +364,7 @@ def _voice_bar(content_text: str, section_key: str):
         return
     lang = st.session_state.get("tts_language", "en")
     st.markdown('<div class="voice-bar"><span class="voice-label">🔊 Voice</span>', unsafe_allow_html=True)
-    c1, c2, c3 = st.columns([1, 1, 3])
+    c1, c2, c3 = st.columns([1, 1, 4])
     with c1:
         st.markdown('<div class="icon-btn">', unsafe_allow_html=True)
         if st.button("🔊", key=f"tts_{section_key}", help="Read aloud"):
@@ -252,7 +389,7 @@ def _voice_bar(content_text: str, section_key: str):
     with c3:
         result = st.session_state.get(f"stt_result_{section_key}", "")
         if result:
-            st.markdown(f'<span style="font-size:12px;color:#a5b4fc;">🎙 "{result}"</span>', unsafe_allow_html=True)
+            st.markdown(f'<span style="font-size:12px;color:#4338ca;">🎙 "{result}"</span>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 
@@ -281,7 +418,7 @@ with st.sidebar:
     st.markdown('</div>', unsafe_allow_html=True)
 
     if process_clicked and files:
-        with st.spinner("Indexing…"):
+        with st.spinner("Indexing documents…"):
             try:
                 docs = load_pdfs_from_uploads(files)
                 if docs:
@@ -309,7 +446,7 @@ with st.sidebar:
     if st.session_state.pdf_files:
         st.markdown('<span class="sb-label">Loaded Files</span>', unsafe_allow_html=True)
         for name, data in st.session_state.pdf_files.items():
-            short = name if len(name) <= 25 else name[:22] + "…"
+            short = name if len(name) <= 26 else name[:23] + "…"
             st.markdown(f"""
             <div class="file-badge">
                 <div class="file-dot"></div>
@@ -340,7 +477,7 @@ if not st.session_state.chain:
         <div class="wc-logo">📘</div>
         <div class="wc-title">Welcome to DocuMentor</div>
         <div class="wc-desc">Upload your PDFs and have an intelligent conversation.
-        Get answers, summaries, study notes and flashcards instantly.</div>
+        Get instant answers, summaries, study notes and flashcards.</div>
         <div class="wc-steps">
             <span class="step-chip">① Upload PDFs</span>
             <span class="step-chip">② Process</span>
@@ -349,7 +486,7 @@ if not st.session_state.chain:
     </div></div>
     """, unsafe_allow_html=True)
 else:
-    left_col, right_col = st.columns([1.25, 0.75], gap="large")
+    left_col, right_col = st.columns([1.30, 0.70], gap="large")
 
     with left_col:
 
@@ -367,7 +504,7 @@ else:
                 st.markdown('</div>', unsafe_allow_html=True)
 
         active = st.session_state.active_tab
-        st.markdown('<div style="height:6px"></div>', unsafe_allow_html=True)
+        st.markdown('<div style="height:8px"></div>', unsafe_allow_html=True)
 
         # ════════════════════════════════════════════════════════════════════
         #  CHAT
@@ -381,36 +518,51 @@ else:
               </div>""", unsafe_allow_html=True)
 
             history = st.session_state.chat_history
+
             if not history:
                 st.markdown("""
               <div class="chat-body">
                 <div class="chat-empty">
                   <div class="chat-empty-icon">💬</div>
-                  <div class="chat-empty-title">Ask anything about your documents</div>
-                  <div class="chat-empty-sub">Powered by RAG · Streaming responses</div>
+                  <div class="chat-empty-title">Start a conversation</div>
+                  <div class="chat-empty-sub">Ask anything about your documents</div>
                 </div>
               </div>""", unsafe_allow_html=True)
             else:
-                msgs_html = ""
+                msgs_html = '<div class="chat-body">'
                 for m in history:
                     safe = (m["content"]
                             .replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"))
+                    ts   = m.get("time", "")
                     if m["role"] == "user":
-                        msgs_html += f'<div class="msg-user"><div class="bubble-user">{safe}</div></div>'
+                        msgs_html += f'''
+                        <div class="msg-row-user">
+                          <div>
+                            <div class="bubble-user">{safe}</div>
+                            <div class="msg-time">{ts}</div>
+                          </div>
+                        </div>'''
                     else:
                         safe_nl = safe.replace("\n","<br>")
-                        msgs_html += (f'<div class="msg-ai"><div class="ai-av">✦</div>'
-                                      f'<div class="bubble-ai">{safe_nl}</div></div>')
-                st.markdown(f'<div class="chat-body">{msgs_html}</div>', unsafe_allow_html=True)
+                        msgs_html += f'''
+                        <div class="msg-row-ai">
+                          <div class="ai-avatar">✦</div>
+                          <div>
+                            <div class="bubble-ai">{safe_nl}</div>
+                            <div class="msg-time-ai">{ts}</div>
+                          </div>
+                        </div>'''
+                msgs_html += '</div>'
+                st.markdown(msgs_html, unsafe_allow_html=True)
 
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)  # close chat-panel
             st.markdown('<div style="height:10px"></div>', unsafe_allow_html=True)
 
             # Input row
-            c1, c2, c3, c4 = st.columns([6, 1.4, 0.75, 0.75])
+            c1, c2, c3, c4 = st.columns([5.8, 1.4, 0.75, 0.75])
             with c1:
                 stt_prefill = st.session_state.pop("stt_result_chat", "")
-                query = st.text_input("msg", placeholder="Message DocuMentor…",
+                query = st.text_input("msg", placeholder="Type a message…",
                                       value=stt_prefill, key="chat_input",
                                       label_visibility="collapsed")
             with c2:
@@ -445,28 +597,45 @@ else:
                 if last_ai:
                     _voice_bar(last_ai, "chat")
 
-            if send_btn and query:
-                st.session_state.chat_history.append({"role":"user","content":query})
+            if (send_btn or (query and st.session_state.get("_enter_pressed"))) and query.strip():
+                now = _now()
+                st.session_state.chat_history.append({"role":"user","content":query,"time":now})
+
+                # Show user bubble immediately
                 user_s = query.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
-                st.markdown(f'<div class="msg-user"><div class="bubble-user">{user_s}</div></div>',
-                            unsafe_allow_html=True)
-                st.markdown('<div class="msg-ai"><div class="ai-av">✦</div>', unsafe_allow_html=True)
+                st.markdown(f'''
+                <div class="msg-row-user">
+                  <div>
+                    <div class="bubble-user">{user_s}</div>
+                    <div class="msg-time">{now}</div>
+                  </div>
+                </div>''', unsafe_allow_html=True)
+
+                # AI typing indicator then stream
+                st.markdown('<div class="msg-row-ai"><div class="ai-avatar">✦</div><div>', unsafe_allow_html=True)
                 placeholder = st.empty()
+                placeholder.markdown('<div class="bubble-typing">⠋ Thinking…</div>', unsafe_allow_html=True)
+
                 streamed = ""
                 try:
                     for token in ask_question_stream(st.session_state.vector_store, query):
                         streamed += token
                         s = (streamed.replace("&","&amp;").replace("<","&lt;")
                                      .replace(">","&gt;").replace("\n","<br>"))
-                        placeholder.markdown(f'<div class="bubble-ai">{s}▌</div>',
+                        placeholder.markdown(f'<div class="bubble-typing">{s}▍</div>',
                                              unsafe_allow_html=True)
                 except Exception as e:
-                    streamed = f"Error generating response: {e}"
+                    streamed = f"Error: {e}"
+
+                # Final bubble
                 s = (streamed.replace("&","&amp;").replace("<","&lt;")
                              .replace(">","&gt;").replace("\n","<br>"))
                 placeholder.markdown(f'<div class="bubble-ai">{s}</div>', unsafe_allow_html=True)
-                st.markdown('</div>', unsafe_allow_html=True)
-                st.session_state.chat_history.append({"role":"assistant","content":streamed})
+                st.markdown('</div></div>', unsafe_allow_html=True)
+
+                ai_time = _now()
+                st.session_state.chat_history.append({"role":"assistant","content":streamed,"time":ai_time})
+
                 try:
                     docs_found = st.session_state.vector_store.similarity_search(query, k=1)
                     if docs_found:
@@ -474,6 +643,7 @@ else:
                         st.session_state.current_page = docs_found[0].metadata.get("page", 0) + 1
                 except Exception:
                     pass
+
                 if st.session_state.get("voice_mode") and streamed:
                     ab = text_to_speech(streamed, st.session_state.get("tts_language","en"))
                     if ab:
@@ -488,7 +658,7 @@ else:
 
             stt_q = st.session_state.pop("stt_result_summary", "")
             if stt_q:
-                with st.spinner(f'Asking: "{stt_q}"…'):
+                with st.spinner(f'Processing…'):
                     try:
                         res = ask_question(st.session_state.chain,
                                            st.session_state.vector_store, stt_q)
@@ -514,7 +684,7 @@ else:
                 st.markdown('</div>', unsafe_allow_html=True)
             else:
                 st.markdown(f'<div class="ct">{st.session_state.last_summary}</div>', unsafe_allow_html=True)
-                st.markdown('<div style="height:16px"></div>', unsafe_allow_html=True)
+                st.markdown('<div style="height:18px"></div>', unsafe_allow_html=True)
                 r1, r2 = st.columns(2)
                 with r1:
                     if st.button("🔄 Regenerate", use_container_width=True, key="rs"):
@@ -536,7 +706,7 @@ else:
 
             stt_q = st.session_state.pop("stt_result_notes", "")
             if stt_q:
-                with st.spinner(f'Asking: "{stt_q}"…'):
+                with st.spinner('Processing…'):
                     try:
                         res = ask_question(st.session_state.chain,
                                            st.session_state.vector_store, stt_q)
@@ -562,7 +732,7 @@ else:
                 st.markdown('</div>', unsafe_allow_html=True)
             else:
                 st.markdown(f'<div class="ct">{st.session_state.last_notes}</div>', unsafe_allow_html=True)
-                st.markdown('<div style="height:16px"></div>', unsafe_allow_html=True)
+                st.markdown('<div style="height:18px"></div>', unsafe_allow_html=True)
                 r1, r2 = st.columns(2)
                 with r1:
                     if st.button("🔄 Regenerate", use_container_width=True, key="rn"):
@@ -585,7 +755,7 @@ else:
 
             stt_q = st.session_state.pop("stt_result_flashcards", "")
             if stt_q:
-                with st.spinner(f'Asking: "{stt_q}"…'):
+                with st.spinner('Processing…'):
                     try:
                         res    = ask_question(st.session_state.chain,
                                               st.session_state.vector_store, stt_q)
@@ -615,24 +785,24 @@ else:
                     st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
             else:
-                st.markdown(f'<p class="cp-desc"><strong style="color:#a5b4fc">{len(cards)}</strong> flashcard(s) generated — expand each card to reveal the answer.</p>', unsafe_allow_html=True)
+                st.markdown(f'<p class="cp-desc"><strong style="color:#6366f1">{len(cards)}</strong> flashcard(s) — expand each card to reveal the answer.</p>', unsafe_allow_html=True)
                 all_text = " ".join(f"Q: {c['question']} A: {c['answer']}" for c in cards)
 
                 for i, card in enumerate(cards, 1):
                     q_safe = card['question'].replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
                     a_safe = card['answer'].replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\n","<br>")
-                    with st.expander(f"Card {i}  ·  {card['question'][:65]}{'…' if len(card['question'])>65 else ''}"):
+                    with st.expander(f"Card {i}  ·  {card['question'][:60]}{'…' if len(card['question'])>60 else ''}"):
                         st.markdown(f"""
                         <div class="fc-card">
                             <div class="fc-q">❓ Question</div>
-                            <div style="font-size:14px;color:#e0e7ff;line-height:1.65;">{q_safe}</div>
+                            <div style="font-size:14px;color:#1e1b4b;line-height:1.65;font-weight:500;">{q_safe}</div>
                             <hr class="fc-divider">
-                            <div class="fc-q">✅ Answer</div>
+                            <div class="fc-q" style="color:#10b981;">✅ Answer</div>
                             <div class="fc-a">{a_safe}</div>
                         </div>
                         """, unsafe_allow_html=True)
 
-                st.markdown('<div style="height:12px"></div>', unsafe_allow_html=True)
+                st.markdown('<div style="height:14px"></div>', unsafe_allow_html=True)
                 _voice_bar(all_text, "flashcards")
                 if st.button("🔄 Regenerate Flashcards", key="rfc"):
                     st.session_state.flashcards = []
@@ -640,7 +810,7 @@ else:
 
             st.markdown('</div></div>', unsafe_allow_html=True)
 
-    # ── RIGHT — PDF Viewer ───────────────────────────────────────────────────
+    # ── RIGHT — PDF Viewer ────────────────────────────────────────────────────
     with right_col:
         st.markdown("""
         <div class="vw">
@@ -685,8 +855,8 @@ else:
                 img_path = tmp_path + f"_p{page_num}z{zoom}.png"
                 pix.save(img_path)
 
-                # FIX: use_column_width deprecated — use width parameter instead
-                st.image(img_path, width=None)
+                # FIX: use_container_width=True instead of width=None
+                st.image(img_path, use_container_width=True)
                 st.caption(f"Page {page_num} / {total_pages}  ·  {selected}")
 
                 sp = tmp_path + "_sp.pdf"
@@ -703,8 +873,10 @@ else:
                 try:
                     os.remove(tmp_path)
                     os.remove(img_path)
+                    os.remove(sp)
                 except OSError:
                     pass
+
             except Exception as e:
                 st.error(f"PDF viewer error: {e}")
 
